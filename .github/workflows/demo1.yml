@@ -1,5 +1,23 @@
 name: Events Demo 1
-on: ...
+on: 
+  pull_request:
+    types: 
+      - opened
+
+  push: 
+    branches:
+      - main
+      - "dev-*"
+      - "feat/**"
+    # If a file changes a specific path in the push 
+    paths-ignore:
+      - ".github/workflows/*"
+
+
+  workflow_dispatch:
+
+
+
 jobs:
   deploy:
     runs-on: ubuntu-latest
