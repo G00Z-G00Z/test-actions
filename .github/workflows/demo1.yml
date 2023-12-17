@@ -25,6 +25,14 @@ jobs:
     steps:
       - name: Get code
         uses: actions/checkout@v3
+      # Cache the dependecies (the following step)
+      - name: Cache dependecies
+        uses: actions/cache@v3
+        with: 
+          path: ~/.npm
+          # Make a hash that dependes on the package-lock.json (so that it saves in further actions)
+          # So use `hashFiles()` function to cmp file with the cash
+          key: deps-node-module-${{ hashFiles('**/package-lock.json') }}
       - name: Install dependencies
         run: npm ci
       - name: Test code
@@ -38,6 +46,12 @@ jobs:
     steps:
       - name: Get code
         uses: actions/checkout@v3
+      # Cache uses a central caching, so all jobs do the same
+      - name: Cache dependecies
+        uses: actions/cache@v3
+        with: 
+          path: ~/.npm
+          key: deps-node-module-${{ hashFiles('**/package-lock.json') }}
       - name: Install dependencies
         run: npm ci
       - name: Build code
