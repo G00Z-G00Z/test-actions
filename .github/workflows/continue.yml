@@ -1,4 +1,4 @@
-name: Website Deployment
+name: Continue on error
 on:
   push:
     branches:
@@ -35,11 +35,10 @@ jobs:
         if: steps.cache.outputs.cache-hit != 'true'
         run: npm ci
       - name: Test code
+        continue-on-error: true
         id: run-tests
         run: npm run test
       - name: Upload test report
-        # Run if any step fails, and that the prev step has outcome of failure
-        if: failure() && steps.run-tests.outcome == 'failure'
         uses: actions/upload-artifact@v3
         with:
           name: test-report
