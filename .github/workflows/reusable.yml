@@ -9,7 +9,7 @@ on:
         type: string
     secrets: 
       some-secret: 
-        required: true
+        required: false
     outputs:
       results: 
         description: "Result of the operation"
